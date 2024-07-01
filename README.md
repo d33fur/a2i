@@ -14,17 +14,8 @@
 
 ## Requirements
 
-- `C++17` or later
-- `raylib` library
-- `OpenCV` library
-- `fftw` library
-- `cmake` for building
-- `make` for install
-
-### Installation of requirements
-
 ```
-sudo apt update && sudo apt install make build-essential python3-pip -y && pip3 install cmake opencv-python
+sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt install -y make build-essential pkg-config git libfftw3-dev libopencv-dev python3-pip libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev && pip3 install cmake
 ```
 
 ## Installation
@@ -41,7 +32,7 @@ make
 
 3. **Run the executable:**
 ```sh
-a2i <path-to-audio-file> [options]
+a2i <audio-file> [options]
 ```
 
 ## Usage
@@ -76,7 +67,6 @@ Options:
 ### Controls
 
 - `Space`: Pause/Resume
-- `P`: Play from beginning
 - `Left Arrow`: Rewind 5 seconds
 - `Right Arrow`: Fast Forward 5 seconds
 - `Esc`: Exit
