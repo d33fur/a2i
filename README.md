@@ -1,5 +1,7 @@
 # a2i: Audio to Image Spectrogram Utility
 
+![Demo of a2i](assets/demo.gif)
+
 ## Overview
 
 `a2i` is a powerful utility and library for generating and visualizing audio spectrograms. It leverages the capabilities of `raylib` for audio processing and `OpenCV` for image manipulation and visualization, along with the `a2i` library for spectrogram generation.
