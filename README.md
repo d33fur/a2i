@@ -15,7 +15,7 @@
 ## Requirements
 
 ```
-sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt install -y make build-essential pkg-config git libfftw3-dev libopencv-dev python3-pip libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev && pip3 install cmake
+sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt install -y make build-essential pkg-config git libfftw3-dev libopencv-dev pulseaudio pulseaudio-utils python3-pip libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl1-mesa-dev cmake
 ```
 
 ## Installation
@@ -88,5 +88,6 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ## Acknowledgments
 
-- [raylib](https://www.raylib.com/)
-- [OpenCV](https://opencv.org/)
+- [raylib](https://www.raylib.com)
+- [OpenCV](https://opencv.org)
+- [FFTW](https://www.fftw.org)
