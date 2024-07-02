@@ -11,7 +11,6 @@ a2i::Spectrogram g;
 int multiplier;
 bool show = false;
 
-
 typedef struct 
 {
   float left;
