@@ -1,2 +1,6 @@
 a2i/build
 cli/build
+warn.log
+doc
+a2i/doc
+a2i/warn.log

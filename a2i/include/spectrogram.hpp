@@ -16,6 +16,11 @@
 #include <opencv2/opencv.hpp>
 #include <fftw3.h>
 
+/**
+ * @brief This is a brief description of the function.
+ *
+ * This is a more detailed description of the function.
+ */
 namespace a2i {
 
   enum graphModes 
