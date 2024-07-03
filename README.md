@@ -4,6 +4,7 @@
 
 ## Table of Contents
 
+- [Changelog](CHANGELOG.md)
 - [Overview](#overview)
 - [Features](#features)
 - [Requirements](#requirements)
@@ -24,7 +25,6 @@
 - [Troubleshooting](#troubleshooting)
   - [Common Issues](#common-issues)
   - [Reporting Issues](#reporting-issues)
-- [Changelog](#changelog)
 - [Future Plans](#future-plans)
 - [Contributing](#contributing)
 - [License](#license)
@@ -283,11 +283,6 @@ Support for Windows and macOS is planned. For now, `a2i` is primarily tested on 
 ### Reporting Issues
 
 If you encounter any issues, please open an issue on the [GitHub repository](https://github.com/d33fur/a2i/issues).
-
-## Changelog
-
-(написать что типа смотрите CHANGELOG.md)
-
 
 ## Future Plans
 

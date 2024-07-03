@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.5.1)
 
 project(a2i LANGUAGES CXX VERSION 1.0.0)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(SOURCE_DIR "source")
 set(INCLUDE_DIR "include")
@@ -68,16 +68,3 @@ export(EXPORT a2iTargets
     FILE "${CMAKE_CURRENT_BINARY_DIR}/a2iTargets.cmake"
     NAMESPACE a2i::)
 export(PACKAGE a2i)
-
-find_package(Doxygen REQUIRED)
-
-if(DOXYGEN_FOUND)
-    set(DOXYGEN_INPUT ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
-    add_custom_target(
-            documentation
-            COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_INPUT}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-            COMMENT "Generating documentation with Doxygen"
-            VERBATIM
-    )
-endif()

@@ -10,6 +10,14 @@ a2i::Spectrogram g;
 
 int multiplier;
 bool show = false;
+bool DEBUG_MODE = false;
+
+// дебаг инфо больше инфы
+// обширнее хелп
+// больше флагов
+// конфиг
+// ноу видео(тогда с консоли управление добавить)
+// документация
 
 typedef struct 
 {
@@ -119,6 +127,8 @@ void printUsage()
             << "  -grad_coef <int>        Gradient coefficient (0-255, default: 127)\n"
             << "  -grid_line_color <color> Grid line color\n"
             << "  -grid_text_color <color> Grid text color\n"
+            
+            << "  -debug                  Enable debug mode\n"
             << "  -h, -help               Show this help message\n"
             << "Controls:\n"
             << "  Space                   Pause/Resume\n"
@@ -149,12 +159,21 @@ int main(int argc, char** argv)
   "{ grad_coef       |      127      | gradient coefficient(0-255)   }"
   "{ grid_line_color |   79,73,80    | grid line color               }"
   "{ grid_text_color |  51,186,243   | grid text color               }"
+  "{ volume          |      0.8      | set volume level (0.0-1.0)    }"
+  "{ debug           |               | enable debug mode             }"
   "{ h help          |               | show help message             }");
 
   if(argc == 1 || parser.has("h") || parser.has("help"))
   {
     printUsage();
     return 0;
+  }
+
+  DEBUG_MODE = parser.has("debug");
+
+  if(!DEBUG_MODE) 
+  {
+    SetTraceLogLevel(LOG_WARNING);
   }
 
   auto file = parser.get<std::string>("@input");
@@ -254,6 +273,14 @@ int main(int argc, char** argv)
   auto grid_line_color = parseColor(parser.get<std::string>("grid_line_color"));
   auto grid_text_color = parseColor(parser.get<std::string>("grid_text_color"));
 
+  auto volume = parser.get<float>("volume");
+  if(volume < 0.0f || volume > 1.0f)
+  {
+    std::cout << "Invalid volume level. Should be between 0.0 and 1.0\n";
+    printUsage();
+    return 0;
+  }
+
   bool stop = true;
 
   InitAudioDevice();
@@ -269,7 +296,7 @@ int main(int argc, char** argv)
   {
     music = LoadMusicStream(file_path);
     PlayMusicStream(music);
-    SetMusicVolume(music, 0.8f);
+    SetMusicVolume(music, volume);
     AttachAudioStreamProcessor(music.stream, callback);
   }
 
@@ -305,6 +332,11 @@ int main(int argc, char** argv)
     else
     {
       UpdateMusicStream(music);
+
+      if(cv::getWindowProperty("a2i", cv::WND_PROP_AUTOSIZE) == 1)
+      {
+        break;
+      }
 
       int key;
 
