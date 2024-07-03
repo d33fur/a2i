@@ -2,42 +2,26 @@ A2I_DIR = a2i
 CLI_DIR = cli
 BIN_DIR = /usr/local/bin
 SUDO := $(shell command -v sudo 2>/dev/null)
-PV_INSTALLED := $(shell command -v pv 2>/dev/null)
 
 GREEN := \033[0;32m
-NC := \033[0m # No Color
-WHITE := \033[1;37m
+NC := \033[0m
 
-.PHONY: install-requirements build-a2i build-cli install-cli clean uninstall-requirements final-message
+.PHONY: build-a2i build-cli install-cli clean final-message
 
-all: install-requirements build-a2i build-cli install-cli clean uninstall-requirements final-message
-
-install-requirements:
-ifndef !PV_INSTALLED
-	@echo "Installing pv..." && \
-	$(if $(SUDO),$(SUDO) apt-get update >/dev/null,  apt-get update >/dev/null) && \
-	$(if $(SUDO),$(SUDO) apt-get install -y pv >/dev/null,  apt-get install -y pv >/dev/null)
-endif
-
-uninstall-requirements:
-ifndef PV_INSTALLED
-	@echo "Uninstalling pv..." && \
-	$(if $(SUDO),$(SUDO) apt-get remove -y pv 2>&1 >/dev/null | pv -pt -e -r,  apt-get remove -y pv 2>&1 >/dev/null | pv -pt -e -r) && \
-	$(if $(SUDO),$(SUDO) apt-get autoremove -y 2>&1 >/dev/null | pv -pt -e -r,  apt-get autoremove -y 2>&1 >/dev/null | pv -pt -e -r)
-endif
+all: build-a2i build-cli install-cli clean final-message
 
 build-a2i:
 	@echo "Building A2I..." && \
 	cd $(A2I_DIR) && \
 	cmake -B build -S . > /dev/null && \
-	$(if $(SUDO),$(SUDO) cmake --build build --target install 2>&1 >/dev/null | pv -pt -e -r,cmake --build build --target install 2>&1 >/dev/null | pv -pt -e -r) && \
+	$(if $(SUDO),$(SUDO) cmake --build build --target install 2>&1 >/dev/null,cmake --build build --target install 2>&1 >/dev/null) && \
 	echo "$(GREEN)A2I build complete!$(NC)\n"
 
 build-cli:
 	@echo "Building CLI A2I..." && \
 	cd $(CLI_DIR) && \
 	cmake -B build -S . > /dev/null && \
-	cmake --build build 2>&1 >/dev/null | pv -pt -e -r && \
+	cmake --build build 2>&1 >/dev/null && \
 	echo "$(GREEN)CLI build complete!$(NC)\n"
 
 install-cli:
@@ -49,7 +33,6 @@ install-cli:
 clean:
 	@echo "Cleaning up..." && \
 	rm -rf $(A2I_DIR)/build $(CLI_DIR)/build && \
-	$(MAKE) uninstall-requirements -s && \
 	echo "$(GREEN)Clean up complete!$(NC)\n"
 
 final-message:
