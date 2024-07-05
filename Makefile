@@ -8,7 +8,7 @@ NC := \033[0m
 
 .PHONY: build-a2i build-cli install-cli clean final-message
 
-all: build-a2i build-cli install-cli clean final-message
+all: build-a2i build-cli install-cli create-config clean final-message
 
 build-a2i:
 	@echo "Building A2I..." && \
@@ -29,6 +29,11 @@ install-cli:
 	$(if $(SUDO),$(SUDO) cp $(CLI_DIR)/build/a2i $(BIN_DIR),cp $(CLI_DIR)/build/a2i $(BIN_DIR)) && \
 	$(if $(SUDO),$(SUDO) chmod +x $(BIN_DIR)/a2i,chmod +x $(BIN_DIR)/a2i) && \
 	echo "$(GREEN)CLI A2I installation complete!$(NC)\n"
+
+create-config:
+	@echo "Creating default configuration..." && \
+	mkdir -p ~/.a2i && \
+	a2i write-default-config
 
 clean:
 	@echo "Cleaning up..." && \

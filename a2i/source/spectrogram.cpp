@@ -20,6 +20,7 @@ void a2i::Spectrogram::setFrameSize(int size)
   out.resize(frame_size / 2);
   fft_out.resize(frame_size);
   window_out.resize(frame_size);
+  // in.resize(frame_size, 0.0f);
 }
 
 void a2i::Spectrogram::setWindowFunc(int type) 

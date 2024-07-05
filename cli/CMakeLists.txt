@@ -4,7 +4,15 @@ project(a2i LANGUAGES CXX VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(${PROJECT_NAME} main.cpp)
+set(SOURCE_DIR "source")
+set(INCLUDE_DIR "include")
+set(JSON_DIR "json/single_include")
+
+file(GLOB_RECURSE CLI_SOURCES CONFIGURE_DEPENDS "${SOURCE_DIR}/*.cpp")
+
+include_directories(${INCLUDE_DIR} ${JSON_DIR})
+
+add_executable(${PROJECT_NAME} ${CLI_SOURCES})
 
 find_package(raylib QUIET)
 if(NOT raylib_FOUND)

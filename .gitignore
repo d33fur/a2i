@@ -5,3 +5,6 @@ doc
 a2i/doc
 a2i/warn.log
 music
+temp.cpp
+.vscode
+temp.json
