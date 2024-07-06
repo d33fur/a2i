@@ -6,7 +6,7 @@ SUDO := $(shell command -v sudo 2>/dev/null)
 GREEN := \033[0;32m
 NC := \033[0m
 
-.PHONY: build-a2i build-cli install-cli clean final-message
+.PHONY: build-a2i build-cli install-cli clean final-message tests
 
 all: build-a2i build-cli install-cli create-config clean final-message
 
@@ -33,7 +33,7 @@ install-cli:
 create-config:
 	@echo "Creating default configuration..." && \
 	mkdir -p ~/.a2i && \
-	a2i write-default-config
+	a2i config reset-default
 
 clean:
 	@echo "Cleaning up..." && \
@@ -54,4 +54,7 @@ final-message:
 	@echo "Please visit the following links for more information:"
 	@echo "Documentation: $(GREEN)https://d33fur.github.io/a2i/index.html$(NC)"
 	@echo "GitHub: $(GREEN)https://github.com/d33fur/a2i$(NC)"
-	@echo "For more information, run: $(GREEN)a2i --help$(NC)"
+	@echo "For more information, run: $(GREEN)a2i help$(NC)"
+
+tests:
+	@python3 tests/test_cli.py

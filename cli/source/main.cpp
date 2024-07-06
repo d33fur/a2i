@@ -208,6 +208,12 @@ void processAudio() {
 int main(int argc, char** argv) {
     Parser parser(argc, argv, config);
 
+    // std::cout << config.configJson << std::endl;
+
+    if(config.end) {
+      return 0;
+    }
+
     if(!config.validate()) {
       std::cout << "Error: !config.validate().\n";
       //написать внутри валидейта проверки и прокидывания исключений
@@ -218,15 +224,6 @@ int main(int argc, char** argv) {
       return 0;
     }
 
-    ONLY_AUDIO = config.get<bool>("onlyaudio");
-    DEBUG_MODE = config.get<bool>("debug");
-    MIC_MODE = config.get<bool>("mic");
-    WINDOW = config.get<std::pair<int, int>>("s");
-    FRAME_SIZE = config.get<unsigned int>("f");
-
-    if (!DEBUG_MODE) {
-        SetTraceLogLevel(LOG_WARNING);
-    }
 
     auto file = config.get<std::string>("audiofile");
     if (file.empty()) {
@@ -235,6 +232,16 @@ int main(int argc, char** argv) {
         return 0;
     }
     const char *file_path = file.c_str();
+
+    ONLY_AUDIO = config.get<bool>("onlyaudio");
+    DEBUG_MODE = config.get<bool>("debug");
+    MIC_MODE = config.get<std::string>("command") == "mic" ? true : false;
+    WINDOW = config.get<std::pair<int, int>>("s");
+    FRAME_SIZE = config.get<unsigned int>("f");
+
+    if (!DEBUG_MODE) {
+        SetTraceLogLevel(LOG_WARNING);
+    }
 
     InitAudioDevice();
     AudioStream stream;

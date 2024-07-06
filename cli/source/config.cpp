@@ -15,35 +15,52 @@ Config::Config() {
 bool Config::execute() const {
   auto command = get<std::string>("command");
 
-  if (command == "help") {
-      std::cout << "help" << std::endl;
-  } else if (command == "play") {
-      std::cout << "play" << std::endl;
-  } else if (command == "write-default-config") {
-      std::string filename = getConfigFilePath();
-      saveToFile(filename);
-      std::cout << "Default configuration successfully saved in ~/.a2i/config.json" << std::endl;
+  if (command == "play") {
+      executePlayFromAudiofile();
+      return 1;
+  } else if (command == "mic") {
+      executePlayFromMic();
+      return 1;
+  }  else if (command == "config") {
+      executeConfig();
       return 0;
-  } else if (command == "write-config") {
-      std::cout << "write-config" << std::endl;
-  } else if (command == "rename-config") {
-      std::cout << "rename-config" << std::endl;
-  } else if (command == "version") {
-      std::cout << "version" << std::endl;
-  } else {
-      std::cout << "unknown command" << std::endl;
+  }  else {
+      std::cout << "Unknown command" << std::endl;
+      return 0;
   }
-
-  return 0;
 }
 
-bool Config::saveToFile(const std::string& filename) const {
+void Config::executePlayFromAudiofile() const {
+
+  std::cout << "play" << std::endl;
+}
+
+void Config::executePlayFromMic() const {
+
+  std::cout << "mic" << std::endl;
+}
+
+void Config::executeConfig() const {
+  // субкомманды обрабатывать
+  std::string filename = getConfigFilePath();
+  saveToFile(filename, "default");
+  std::cout << "Default configuration successfully saved in ~/.a2i/config.json" << std::endl;
+}
+
+bool Config::saveToFile(const std::string& filename, const std::string& configname) const {
     std::ofstream file(filename);
     if (!file.is_open()) {
         return false;
     }
-    //проверку файла и запись под нужным именем конфига
-    file << configJson.dump(4);
+
+    nlohmann::json outputJson;
+    outputJson[configname] = configJson;
+
+    outputJson[configname].erase("config");
+    outputJson[configname].erase("command");
+    outputJson[configname].erase("subcommand");
+
+    file << outputJson.dump(4);
     return true;
 }
 

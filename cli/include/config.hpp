@@ -10,8 +10,12 @@ class Config {
 public:
     Config();
     bool execute() const;
+    void executePlayFromAudiofile() const;
+    void executePlayFromMic() const;
+    void executeConfig() const;
 
-    bool saveToFile(const std::string& filename) const;
+
+    bool saveToFile(const std::string& filename, const std::string& configname) const;
     std::string getConfigFilePath() const;
     bool validate() const;
 
@@ -25,6 +29,7 @@ public:
     void push_back(const std::string& key, const T& value);
 
     nlohmann::json configJson;
+    bool end = false;
 };
 
 template<typename T>

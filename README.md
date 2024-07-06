@@ -124,19 +124,18 @@ Options:
   -mic                     Use microphone
   -f <int>                 Frame size (>=512, default: 65536)
   -n <int>                 Number of previous frames (>0)
-  -size <height,width>     Window size (default: 400,2100)
+  -s <height,width>     Window size (default: 400,2100)
   -grad <int>              Colormap (0-21)
   -fill <int>              Fill type (0-2, default: 2)
-  -border                  Border line
-  -line <color>            Line color (default: 255,255,255)
-  -underline <color>       Underline color (default: 127,127,127)
+  -b                  Border line
+  -lc <color>            Line color (default: 255,255,255)
+  -uc <color>       Underline color (default: 127,127,127)
   -grid                    Grid
-  -grad_coef <int>         Gradient coefficient (0-255, default: 127)
-  -grid_line_color <color> Grid line color
-  -grid_text_color <color> Grid text color
-  -volume <float>          Set volume level (0.0-1.0)
+  -gc <int>         Gradient coefficient (0-255, default: 127)
+  -glc <color> Grid line color
+  -gtc <color> Grid text color
+  -v <float>          Set volume level (0.0-1.0)
   -debug                   Enable debug mode
-  -h, -help                Show this help message
 ```
 
 ### Controls
