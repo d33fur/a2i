@@ -16,8 +16,8 @@ add_executable(${PROJECT_NAME} ${CLI_SOURCES})
 
 find_package(raylib QUIET)
 if(NOT raylib_FOUND)
-    message("raylib not found")
-    message("Trying to download raylib...")
+    # message("raylib not found")
+    # message("Trying to download raylib...")
     include(FetchContent)
     FetchContent_Declare(
         raylib
@@ -26,17 +26,17 @@ if(NOT raylib_FOUND)
         GIT_SHALLOW 1
     )
     FetchContent_MakeAvailable(raylib)
-    message("raylib downloaded")
+    # message("raylib downloaded")
     target_link_libraries(${PROJECT_NAME} PUBLIC raylib)
 else()
-  message("raylib found")
+  # message("raylib found")
   target_link_libraries(${PROJECT_NAME} PUBLIC raylib)
 endif()
 
 find_package(a2i REQUIRED)
-message("a2i found")
+# message("a2i found")
 find_package(OpenCV REQUIRED)
-message("OpenCV found")
+# message("OpenCV found")
 
 include_directories(${OpenCV_INCLUDE_DIRS})
 

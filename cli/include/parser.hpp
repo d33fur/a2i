@@ -13,7 +13,7 @@ public:
     void loadDefault(Config& c);
     void parseArgs(int argc, char** argv, Config& config);
     void printUsage() const;
-    void printControls() const;
+    void printManPage(const std::string& command) const;
     void printVersion() const;
 
 

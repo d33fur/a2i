@@ -1,0 +1,71 @@
+.TH A2I-MIC 1 "July 2024" "A2I Manual" "A2I Manual"
+.SH NAME
+a2i-mic \- Use microphone for audio input
+.SH SYNOPSIS
+.B a2i mic
+.RI "[<flags>]"
+.SH DESCRIPTION
+The 'mic' command allows you to use the microphone for audio input and process it in real-time.
+.SH OPTIONS
+.TP
+.B \-a
+Amplitude range (default: [-90,50])
+.TP
+.B \-w
+Window function (0-9) (default: 9)
+.TP
+.B \-l
+Line type (0-2) (default: 0)
+.TP
+.B \-g
+Graph mode (0-1) (default: 1)
+.TP
+.B \-m
+Normalize multiplier (default: 20)
+.TP
+.B \-f
+Frame size (>=512) (default: 65536)
+.TP
+.B \-n
+Number of previous frames (>0) (default: 20)
+.TP
+.B \-s
+Window size (height,width) (default: [400,2100])
+.TP
+.B \-grad
+Colormap (0-21) (default: true)
+.TP
+.B \-fill
+Fill type (0-2) (default: 2)
+.TP
+.B \-b
+Border line (default: false)
+.TP
+.B \-lc
+Line color (default: "255,255,255")
+.TP
+.B \-uc
+Underline color (default: "127,127,127")
+.TP
+.B \-grid
+Grid (default: false)
+.TP
+.B \-gc
+Gradient coefficient (0-255) (default: 127)
+.TP
+.B \-glc
+Grid line color (default: "79,73,80")
+.TP
+.B \-gtc
+Grid text color (default: "51,186,243")
+.TP
+.B \-v
+Set volume level (0.0-1.0) (default: 0.8)
+.TP
+.B \-onlyaudio
+Play only audio (default: false)
+.TP
+.B \-debug
+Enable debug mode (default: false)
+.SH "SEE ALSO"
+.BR a2i (1)

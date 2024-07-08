@@ -1,0 +1,20 @@
+.TH A2I-CONFIG 1 "July 2024" "A2I Manual" "A2I Manual"
+.SH NAME
+a2i-config \- Configure settings for a2i
+.SH SYNOPSIS
+.B a2i config
+.RI <subcommand> " [<args>] [<flags>]"
+.SH DESCRIPTION
+The 'config' command allows you to manage a2i configurations.
+.SH SUBCOMMANDS
+.TP
+.B reset-default
+Write default configuration.
+.TP
+.B rename <old> <new>
+Rename configuration from <old> to <new>.
+.TP
+.B write <name>
+Write configuration with the given <name>.
+.SH "SEE ALSO"
+.BR a2i (1)

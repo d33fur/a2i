@@ -266,8 +266,6 @@ int main(int argc, char** argv) {
         g.setWindowFunc(config.get<int>("f"));
         cv::namedWindow("a2i", cv::WINDOW_NORMAL);
         cv::resizeWindow("a2i", WINDOW.second, WINDOW.first);
-    } else {
-        parser.printControls();
     }
 
     std::thread consoleInputThread(handleConsoleInput, std::ref(music), std::ref(RUNNING));

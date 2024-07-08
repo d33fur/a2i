@@ -4,9 +4,15 @@
 #include <stdexcept>
 #include <sstream>
 #include <fstream>
+#include <cstdlib>
 #include <nlohmann/json.hpp>
 
 Parser::Parser(int argc, char** argv, Config& c) {
+    if(argc == 1) {
+      printUsage();
+      c.end = 1;
+      return;
+    }
     loadConfigFromFile(c, "default");
     parseArgs(argc, argv, c);
 }
@@ -46,9 +52,6 @@ void Parser::loadDefault(Config& c) {
 }
 
 void Parser::parseArgs(int argc, char** argv, Config& c) {
-    if (argc < 2) {
-        throw std::runtime_error("No command provided");
-    }
 
     std::string command = argv[1];
     int counter = 2;
@@ -57,6 +60,18 @@ void Parser::parseArgs(int argc, char** argv, Config& c) {
     bool needFlags = true;
 
     if (containsCommand) {
+        if(argc > 2 && strcmp(argv[2], "--help") == 0) {
+          if(command == "config") {
+            printManPage(command);
+            c.end = true;
+            return;
+          }
+          else if(command == "mic") {
+            printManPage(command);
+            c.end = true;
+            return;
+          }
+        }
         containsSubcommands = arguments["commands"][command].contains("subcommands");
     }
 
@@ -93,7 +108,7 @@ void Parser::parseArgs(int argc, char** argv, Config& c) {
         std::string flag = command.substr(2, command.length());
         if (arguments["flags"].contains(flag) && arguments["flags"][flag].contains("dash") && arguments["flags"][flag]["dash"] == 2) {
             if (flag == "help") {
-                printUsage();
+                printManPage("help");
                 c.end = true;
                 return;
             } else if (flag == "version") {
@@ -147,40 +162,47 @@ void Parser::parseArgs(int argc, char** argv, Config& c) {
     c.end = false;
 }
 
+void Parser::printUsage() const {
+    std::cout << "Usage: a2i [--version] [--help] <command|audiofile> [<args>]\n\n"
+              << "These are common a2i commands used in various situations:\n\n"
+              << "start a working area:\n"
+              << "   mic       Use microphone\n"
+              << "   config    Configure settings\n\n"
 
-void Parser::printUsage() const {  // сделать как на гите
-    std::cout << "Usage: \n"
-              << "  a2i <path>/<command> [options]\n\n"
-              << "Commands:\n";
-    for (const auto& cmd : arguments["commands"].items()) {
-        if (cmd.value().contains("about")) {
-            std::cout << "  " << cmd.key() << "                   " << cmd.value()["about"].get<std::string>() << "\n";
-        } else {
-            std::cout << "  " << cmd.key() << "                   (no description available)\n";
-        }
-    }
+              << "manage configurations:\n"
+              << "   config write <name>       Write configuration with name\n"
+              << "   config rename <old> <new> Rename configuration name\n"
+              << "   config reset-default      Write default configuration\n\n"
 
-    std::cout << "\nOptions:\n";
+              << "Options:\n";
+
     for (const auto& flag : arguments["flags"].items()) {
-        std::cout << "  -" << flag.key() << "=" << (flag.value().contains("default") ? flag.value()["default"].dump() : "(no default)") 
-                  << "               " << (flag.value().contains("about") ? flag.value()["about"].get<std::string>() : "(no description)") << "\n";
-    }
-
-    printControls();
-}
-
-
-void Parser::printControls() const {
-    std::cout << "\nControls:\n";
-    for (const auto& arg : arguments["controls"].items()) {
-        if (arg.value().contains("about")) {
-            std::cout << arg.key() << " " << arg.value()["about"].get<std::string>() << "\n";
-        } else {
-            std::cout << arg.key() << " (no description available)\n";
+        if (flag.value().contains("dash") && flag.value()["dash"] == 1) {
+            std::cout << "  -" << flag.key();
+            if (flag.value().contains("needValue") && flag.value()["needValue"]) {
+                std::cout << "=<value>";
+            }
+            std::cout << "\t" << (flag.value().contains("about") ? flag.value()["about"].get<std::string>() : "") << "\n";
         }
     }
+
+    std::cout << "\nControls:\n";
+    for (const auto& control : arguments["controls"].items()) {
+        std::cout << "  " << control.key() << "\t" << (control.value().contains("about") ? control.value()["about"].get<std::string>() : "") << "\n";
+    }
+
+    std::cout << "\nSee 'a2i --help' or 'a2i --version' for more information.\n";
 }
 
+void Parser::printManPage(const std::string& command) const {
+    if (command == "config") {
+        system("man a2i-config");
+    } else if (command == "mic") {
+        system("man a2i-mic");
+    } else if (command == "help"){
+        system("man a2i");
+    }
+}
 
 void Parser::printVersion() const {
     std::cout << "a2i version " << A2I_VERSION << std::endl;
