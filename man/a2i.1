@@ -1,9 +1,9 @@
 .TH A2I 1 "July 2024" "A2I Manual" "A2I Manual"
 .SH NAME
-a2i \- Audio to Image processor
+a2i \- audio to image visualizer
 .SH SYNOPSIS
 .B a2i
-.RI [ options ] " <audiofile>"
+.RI <audiofile> " [<args>]"
 .br
 .B a2i config
 .RI <subcommand> " [<args>] [<flags>]"
@@ -12,8 +12,11 @@ a2i \- Audio to Image processor
 .RI "[<flags>]"
 .SH DESCRIPTION
 .B a2i
-is a tool to process audio files and generate visual representations.
+is a fast tool to visualize audio spectrum and listen music.
 .SH COMMANDS
+.TP
+.B a2i <audiofile>
+Configure settings for a2i.
 .TP
 .B a2i config
 Configure settings for a2i.
